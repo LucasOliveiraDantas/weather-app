@@ -39,14 +39,86 @@ function getAdvice(){
 
       document.querySelector(".desc-time-sunset").textContent = sunRise.toLocaleTimeString("it-IT")
 
-      let wind = parseInt(data.wind.speed)
+      let wind = data.wind.speed
 
       document.querySelector('.desc-speed-wind').textContent = wind +"m/S"
 
       let celMax = parseInt(data.main.temp_max - 273)
       document.querySelector('.desc-time-max').textContent = celMax + '°'
 
+
+      
+      let objWJ = JSON.stringify(data)
+
+      let objW = JSON.parse(objWJ)
+
+      objW = objW.weather[0].main
+      
+      if(objW ===  "Clouds"){
+
+        const iconW =  document.querySelector('.clima .bi')
+        document.querySelector('.clima .bi').classList.replace(iconW.classList[1] ,"bi-clouds-fill")
+
+        iconW.style.color= "white"
+      }
+
+      if(objW ===  "Drizzle"){
+
+        const iconW =  document.querySelector('.clima .bi')
+        document.querySelector('.clima .bi').classList.replace(iconW.classList[1] ,"bi-cloud-drizzle-fill")
+
+        iconW.style.color= "white"
+      }
+
+      if(objW ===  "Rain"){
+
+        const iconW =  document.querySelector('.clima .bi')
+        document.querySelector('.clima .bi').classList.replace(iconW.classList[1] ,"bi-cloud-rain-fill")
+
+        iconW.style.color= "white"
+      }
+
+
+      if(objW ===  "Clear"){
+
+        const iconW =  document.querySelector('.clima .bi')
+        document.querySelector('.clima .bi').classList.replace(iconW.classList[1] ,"bi-sun-fill")
+
+        iconW.style.color= "white"
+      }
+
+      
+      console.log(document.querySelector(".clima .bi").classList[1])
+      console.log(objW)
+
+      
     }
 
-    
-    
+
+
+    let timeToday = new Date()
+
+    let dayName = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
+    let day = timeToday.getDay()
+
+    day = dayName[day]
+
+    let hours = timeToday.getHours()
+    let minutes = timeToday.getMinutes()
+
+    document.querySelector(".info-time-day").textContent = day + " " + hours + ":" + minutes
+
+
+    if(hours > 12){
+      document.querySelector(".info-time-day").textContent = day + " " + hours + ":" + minutes + " PM"
+    }
+
+    if(hours < 12){
+      document.querySelector(".info-time-day").textContent = day + " " + hours + ":" + minutes + " AM"
+    }
+
+     
+    if (minutes < 10){
+      document.querySelector(".info-time-day").textContent = day + " " + hours + ":" + "0" + minutes + " AM"
+    }
